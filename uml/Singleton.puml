@@ -1,0 +1,27 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+class Game {
+    - heroAircraft:HeroAircraft
+    + Game()
+    + action():void
+}
+
+class HeroAircraft {
+    - {static} INSTANCE:HeroAircraft
+    - HeroAircraft(int locationX, int locationY, int speedX, int speedY, int hp)
+    + {static} getInstance():HeroAircraft
+    + forward():void
+}
+
+Game ..> HeroAircraft : getInstance()
+HeroAircraft --> HeroAircraft : INSTANCE
+
+note right of HeroAircraft
+饿汉式单例
+- private constructor
+- static final instance
+- public getInstance()
+end note
+
+@enduml

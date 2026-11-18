@@ -1,0 +1,45 @@
+@startuml
+skinparam classAttributeIconSize 0
+title 飞机大战模板模式 UML 类图
+
+abstract class Game {
+  # difficulty: GameDifficulty
+  # enemyMaxNumber: int
+  # enemySpawnCycle: double
+  # heroShootCycle: double
+  # enemyShootCycle: double
+  # bossEnemyHp: int
+  + final action(): void
+  # initDifficultyConfig(): void
+  # increaseDifficultyIfNeeded(): void
+  # canCreateBoss(): boolean
+  # afterBossCreated(): void
+  # createCommonEnemyAircraft(): AbstractEnemy
+  # createBossEnemy(): BossEnemy
+}
+
+class EasyGame {
+  # initDifficultyConfig(): void
+  # increaseDifficultyIfNeeded(): void
+  # canCreateBoss(): boolean
+  # afterBossCreated(): void
+}
+
+class NormalGame {
+  # initDifficultyConfig(): void
+  # increaseDifficultyIfNeeded(): void
+  # canCreateBoss(): boolean
+  # afterBossCreated(): void
+}
+
+class HardGame {
+  # initDifficultyConfig(): void
+  # increaseDifficultyIfNeeded(): void
+  # canCreateBoss(): boolean
+  # afterBossCreated(): void
+}
+
+Game <|-- EasyGame
+Game <|-- NormalGame
+Game <|-- HardGame
+@enduml

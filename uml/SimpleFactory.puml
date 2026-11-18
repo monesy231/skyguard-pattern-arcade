@@ -1,0 +1,62 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+class Client {
+    + createSupply(type, locationX, locationY):AbstractSupply
+}
+
+class SupplyFactory {
+    - {static} SUPPLY_SPEED_Y:int
+    + createSupply(SupplyType type, int locationX, int locationY):AbstractSupply
+    + createRandomSupply(SupplyType[] supplyTypes, int locationX, int locationY):AbstractSupply
+}
+
+enum SupplyType {
+    BLOOD
+    FIRE
+    FIRE_PLUS
+    BOMB
+    FREEZE
+}
+
+abstract class AbstractSupply << (A, #B7E0E4) >> {
+    + AbstractSupply(int locationX, int locationY, int speedX, int speedY)
+    + forward():void
+    + {abstract} activate(HeroAircraft heroAircraft):void
+}
+
+class BloodSupply {
+    - {static} RECOVER_HP:int
+    + BloodSupply(int locationX, int locationY, int speedX, int speedY)
+    + activate(HeroAircraft heroAircraft):void
+}
+
+class FireSupply {
+    + FireSupply(int locationX, int locationY, int speedX, int speedY)
+    + activate(HeroAircraft heroAircraft):void
+}
+
+class FirePlusSupply {
+    + FirePlusSupply(int locationX, int locationY, int speedX, int speedY)
+    + activate(HeroAircraft heroAircraft):void
+}
+
+class BombSupply {
+    + BombSupply(int locationX, int locationY, int speedX, int speedY)
+    + activate(HeroAircraft heroAircraft):void
+}
+
+class FreezeSupply {
+    + FreezeSupply(int locationX, int locationY, int speedX, int speedY)
+    + activate(HeroAircraft heroAircraft):void
+}
+
+Client ..> SupplyFactory
+SupplyFactory ..> SupplyType
+SupplyFactory ..> AbstractSupply
+AbstractSupply <|-- BloodSupply
+AbstractSupply <|-- FireSupply
+AbstractSupply <|-- FirePlusSupply
+AbstractSupply <|-- BombSupply
+AbstractSupply <|-- FreezeSupply
+@enduml

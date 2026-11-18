@@ -1,0 +1,154 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+abstract class AbstractFlyingObject << (A, #B7E0E4) >> {
+    # locationX:int
+    # locationY:int
+    # speedX:int
+    # speedY:int
+    # image:BufferedImage
+    # width:int
+    # height:int
+    # isValid:boolean
+    + AbstractFlyingObject()
+    + AbstractFlyingObject(int locationX, int locationY, int speedX, int speedY)
+    + forward():void
+    + crash(AbstractFlyingObject flyingObject):boolean
+    + getLocationX():int
+    + getLocationY():int
+    + setLocation(double locationX, double locationY):void
+    + getSpeedY():int
+    + getImage():BufferedImage
+    + getWidth():int
+    + getHeight():int
+    + vanish():void
+    + notValid():boolean
+}
+
+abstract class AbstractAircraft << (A, #B7E0E4) >> {
+    # maxHp:int
+    # hp:int
+    # shootNum:int
+    # power:int
+    # direction:int
+    # shootStrategy:ShootStrategy
+    + AbstractAircraft(int locationX, int locationY, int speedX, int speedY, int hp)
+    + decreaseHp(int decrease):void
+    + increaseHp(int amount):void
+    + getHp():int
+    + getShootNum():int
+    + setShootNum(int shootNum):void
+    + getPower():int
+    + setPower(int power):void
+    + getDirection():int
+    + setDirection(int direction):void
+    + getSpeedX():int
+    + getShootStrategy():ShootStrategy
+    + setShootStrategy(ShootStrategy shootStrategy):void
+    + shoot():List<BaseBullet>
+}
+
+abstract class AbstractEnemy << (A, #B7E0E4) >> {
+    + AbstractEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
+    + forward():void
+}
+
+class HeroAircraft {
+    - {static} INSTANCE:HeroAircraft
+    - HeroAircraft(int locationX, int locationY, int speedX, int speedY, int hp)
+    + {static} getInstance():HeroAircraft
+    + forward():void
+}
+
+class MobEnemy {
+    + MobEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
+    + forward():void
+}
+
+class EliteEnemy {
+    + EliteEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
+}
+
+class ElitePlusEnemy {
+    + ElitePlusEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
+}
+
+class EliteProEnemy {
+    + EliteProEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
+}
+
+class BossEnemy {
+    + BossEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
+    + forward():void
+}
+
+abstract class BaseBullet << (A, #B7E0E4) >> {
+    - power:int
+    + BaseBullet(int locationX, int locationY, int speedX, int speedY, int power)
+    + forward():void
+    + getPower():int
+}
+
+class HeroBullet {
+    + HeroBullet(int locationX, int locationY, int speedX, int speedY, int power)
+}
+
+class EnemyBullet {
+    + EnemyBullet(int locationX, int locationY, int speedX, int speedY, int power)
+}
+
+abstract class AbstractSupply << (A, #B7E0E4) >> {
+    + AbstractSupply(int locationX, int locationY, int speedX, int speedY)
+    + forward():void
+    + {abstract} activate(HeroAircraft heroAircraft):void
+}
+
+class BloodSupply {
+    - {static} RECOVER_HP:int
+    + BloodSupply(int locationX, int locationY, int speedX, int speedY)
+    + activate(HeroAircraft heroAircraft):void
+}
+
+class FireSupply {
+    + FireSupply(int locationX, int locationY, int speedX, int speedY)
+    + activate(HeroAircraft heroAircraft):void
+}
+
+class FirePlusSupply {
+    + FirePlusSupply(int locationX, int locationY, int speedX, int speedY)
+    + activate(HeroAircraft heroAircraft):void
+}
+
+class BombSupply {
+    + BombSupply(int locationX, int locationY, int speedX, int speedY)
+    + activate(HeroAircraft heroAircraft):void
+}
+
+class FreezeSupply {
+    + FreezeSupply(int locationX, int locationY, int speedX, int speedY)
+    + activate(HeroAircraft heroAircraft):void
+}
+
+AbstractFlyingObject <|-- AbstractAircraft
+AbstractAircraft <|-- AbstractEnemy
+AbstractAircraft <|-- HeroAircraft
+AbstractEnemy <|-- MobEnemy
+AbstractEnemy <|-- EliteEnemy
+AbstractEnemy <|-- ElitePlusEnemy
+AbstractEnemy <|-- EliteProEnemy
+AbstractEnemy <|-- BossEnemy
+
+AbstractFlyingObject <|-- BaseBullet
+BaseBullet <|-- HeroBullet
+BaseBullet <|-- EnemyBullet
+
+AbstractFlyingObject <|-- AbstractSupply
+AbstractSupply <|-- BloodSupply
+AbstractSupply <|-- FireSupply
+AbstractSupply <|-- FirePlusSupply
+AbstractSupply <|-- BombSupply
+AbstractSupply <|-- FreezeSupply
+
+AbstractAircraft ..> BaseBullet : shoot()
+AbstractSupply ..> HeroAircraft : activate()
+@enduml

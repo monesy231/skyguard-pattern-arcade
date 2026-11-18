@@ -1,0 +1,40 @@
+@startuml
+skinparam classAttributeIconSize 0
+title 飞机大战排行榜 DAO 模式 UML 类图
+
+class ScoreRecord {
+  - playerName: String
+  - score: int
+  - recordTime: LocalDateTime
+  + toFileLine(): String
+  + fromFileLine(line: String): ScoreRecord
+}
+
+interface ScoreDao {
+  + addRecord(record: ScoreRecord): void
+  + getAllRecords(): List<ScoreRecord>
+  + deleteByRank(rank: int): void
+}
+
+class ScoreDaoImpl {
+  - filePath: Path
+  + addRecord(record: ScoreRecord): void
+  + getAllRecords(): List<ScoreRecord>
+  + deleteByRank(rank: int): void
+  - saveAll(records: List<ScoreRecord>): void
+}
+
+class ScoreBoardService {
+  - scoreDao: ScoreDao
+  + saveScore(playerName: String, score: int): void
+  + listScores(): List<ScoreRecord>
+  + deleteByRank(rank: int): void
+}
+
+class ScoreBoardFrame
+
+ScoreDao <|.. ScoreDaoImpl
+ScoreDaoImpl ..> ScoreRecord
+ScoreBoardService o-- ScoreDao
+ScoreBoardFrame ..> ScoreBoardService
+@enduml

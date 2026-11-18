@@ -1,0 +1,87 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+interface ShootStrategy << (I, #B7E0E4) >> {
+    + shoot(AbstractAircraft aircraft):List<BaseBullet>
+    + createBullet(AbstractAircraft aircraft, int x, int y, int speedX, int speedY):BaseBullet
+}
+
+class StraightShootStrategy {
+    + shoot(AbstractAircraft aircraft):List<BaseBullet>
+}
+
+class DoubleStraightShootStrategy {
+    + shoot(AbstractAircraft aircraft):List<BaseBullet>
+}
+
+class ScatterShootStrategy {
+    + shoot(AbstractAircraft aircraft):List<BaseBullet>
+}
+
+class CircleShootStrategy {
+    + shoot(AbstractAircraft aircraft):List<BaseBullet>
+}
+
+class NoShootStrategy {
+    + shoot(AbstractAircraft aircraft):List<BaseBullet>
+}
+
+abstract class AbstractAircraft << (A, #B7E0E4) >> {
+    # maxHp:int
+    # hp:int
+    # shootNum:int
+    # power:int
+    # direction:int
+    # shootStrategy:ShootStrategy
+    + getShootNum():int
+    + setShootNum(int shootNum):void
+    + getPower():int
+    + setPower(int power):void
+    + getDirection():int
+    + setDirection(int direction):void
+    + getShootStrategy():ShootStrategy
+    + setShootStrategy(ShootStrategy shootStrategy):void
+    + shoot():List<BaseBullet>
+}
+
+class HeroAircraft {
+    - {static} INSTANCE:HeroAircraft
+    + {static} getInstance():HeroAircraft
+    + forward():void
+}
+
+abstract class AbstractEnemy << (A, #B7E0E4) >>
+class MobEnemy
+class EliteEnemy
+class ElitePlusEnemy
+class EliteProEnemy
+class BossEnemy
+
+class FireSupply {
+    + activate(HeroAircraft heroAircraft):void
+}
+
+class FirePlusSupply {
+    + activate(HeroAircraft heroAircraft):void
+}
+
+ShootStrategy <|.. StraightShootStrategy
+ShootStrategy <|.. DoubleStraightShootStrategy
+ShootStrategy <|.. ScatterShootStrategy
+ShootStrategy <|.. CircleShootStrategy
+ShootStrategy <|.. NoShootStrategy
+
+AbstractAircraft o--> ShootStrategy
+AbstractAircraft <|-- HeroAircraft
+AbstractAircraft <|-- AbstractEnemy
+AbstractEnemy <|-- MobEnemy
+AbstractEnemy <|-- EliteEnemy
+AbstractEnemy <|-- ElitePlusEnemy
+AbstractEnemy <|-- EliteProEnemy
+AbstractEnemy <|-- BossEnemy
+
+FireSupply ..> HeroAircraft : setShootNum(3)
+FireSupply ..> ScatterShootStrategy : setShootStrategy(...)
+FirePlusSupply ..> HeroAircraft : setShootNum(12)
+FirePlusSupply ..> CircleShootStrategy : setShootStrategy(...)
+@enduml

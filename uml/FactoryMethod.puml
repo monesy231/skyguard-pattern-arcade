@@ -1,0 +1,89 @@
+@startuml
+skinparam classAttributeIconSize 0
+class Client {
+    + createEnemy(factory):AbstractEnemy
+}
+
+abstract class EnemyFactory << (A, #B7E0E4) >> {
+    # random:ThreadLocalRandom
+    # randomLocationX(int objectWidth):int
+    # randomLocationY(int objectHeight):int
+    # randomSideSpeed():int
+    + {abstract} createEnemy():AbstractEnemy
+}
+
+class MobEnemyFactory {
+    - {static} MOB_ENEMY_HP:int
+    - {static} MOB_ENEMY_SPEED_Y:int
+    + createEnemy():AbstractEnemy
+}
+
+class EliteEnemyFactory {
+    - {static} ELITE_ENEMY_HP:int
+    - {static} ELITE_ENEMY_SPEED_Y:int
+    + createEnemy():AbstractEnemy
+}
+
+class ElitePlusEnemyFactory {
+    - {static} ELITE_PLUS_ENEMY_HP:int
+    - {static} ELITE_PLUS_ENEMY_SPEED_Y:int
+    + createEnemy():AbstractEnemy
+}
+
+class EliteProEnemyFactory {
+    - {static} ELITE_PRO_ENEMY_HP:int
+    - {static} ELITE_PRO_ENEMY_SPEED_Y:int
+    + createEnemy():AbstractEnemy
+}
+
+class BossEnemyFactory {
+    - {static} BOSS_ENEMY_HP:int
+    + createEnemy():AbstractEnemy
+}
+
+abstract class AbstractEnemy << (A, #B7E0E4) >> {
+    + AbstractEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
+    + forward():void
+}
+
+class MobEnemy {
+    + MobEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
+    + forward():void
+}
+
+class EliteEnemy {
+    + EliteEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
+}
+
+class ElitePlusEnemy {
+    + ElitePlusEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
+}
+
+class EliteProEnemy {
+    + EliteProEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
+}
+
+class BossEnemy {
+    + BossEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
+    + forward():void
+}
+
+Client ..> EnemyFactory
+EnemyFactory <|-- MobEnemyFactory
+EnemyFactory <|-- EliteEnemyFactory
+EnemyFactory <|-- ElitePlusEnemyFactory
+EnemyFactory <|-- EliteProEnemyFactory
+EnemyFactory <|-- BossEnemyFactory
+
+AbstractEnemy <|-- MobEnemy
+AbstractEnemy <|-- EliteEnemy
+AbstractEnemy <|-- ElitePlusEnemy
+AbstractEnemy <|-- EliteProEnemy
+AbstractEnemy <|-- BossEnemy
+
+MobEnemyFactory ..> MobEnemy : createEnemy()
+EliteEnemyFactory ..> EliteEnemy : createEnemy()
+ElitePlusEnemyFactory ..> ElitePlusEnemy : createEnemy()
+EliteProEnemyFactory ..> EliteProEnemy : createEnemy()
+BossEnemyFactory ..> BossEnemy : createEnemy()
+@enduml
